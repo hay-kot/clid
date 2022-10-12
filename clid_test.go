@@ -16,6 +16,7 @@ type testStruct struct {
 	Nested      Nested
 	NestedPtr   *Nested
 	FlagString  string  `cli:"string"`
+	FlagBool    bool    `cli:"bool"`
 	FlagInt     int     `cli:"int"`
 	FlagInt8    int8    `cli:"int8"`
 	FlagInt16   int16   `cli:"int16"`
@@ -39,6 +40,8 @@ func TestString(t *testing.T) {
 	set := flag.NewFlagSet("test", 0)
 
 	set.String("string", "value1", "test flag1")
+
+	set.Bool("bool", true, "test flag2")
 
 	set.Float64("float", 10.0, "test float")
 	set.Float64("float32", 5.0, "test float32")
@@ -67,6 +70,9 @@ func TestString(t *testing.T) {
 
 	// Strings
 	assert.Equal(t, "value1", ts.FlagString)
+
+	// Boolean
+	assert.Equal(t, true, ts.FlagBool)
 
 	// Floats
 	assert.InDelta(t, 10.0, ts.FlagFloat64, 0.0001)
